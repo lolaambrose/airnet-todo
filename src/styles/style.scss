@@ -1,0 +1,291 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+:root {
+   --numDays: 7;
+   --numHours: 16;
+   --timeHeight: 40px;
+   --calBgColor: #fff1f8;
+   --eventBorderColor: #f2d3d8;
+   --eventColor1: #ffd6d1;
+   --eventColor2: #fafaa3;
+   --eventColor3: #e2f8ff;
+   --eventColor4: #d1ffe6;
+}
+
+@function get-event-color($type) {
+   @if $type == 'pink' {
+      @return var(--eventColor1);
+   } @else if $type == 'yellow' {
+      @return var(--eventColor2);
+   } @else if $type == 'blue' {
+      @return var(--eventColor3);
+   } @else if $type == 'green' {
+      @return var(--eventColor4);
+   } @else {
+      @return white;
+   }
+}
+
+// Mixin for grid with repeated rows
+@mixin grid-rows($numRows, $height) {
+   display: grid;
+   grid-template-rows: repeat($numRows, $height);
+}
+
+// Mixin for event block styling
+@mixin event-block($start, $end, $type) {
+   grid-row-start: $start;
+   grid-row-end: $end;
+   background: get-event-color($type);
+}
+
+p {
+   margin: 0;
+}
+
+.calendar {
+   display: flex;
+   flex-direction: column;
+   gap: 20px;
+   margin: 2rem;
+   overflow: hidden;
+
+   &__weeks {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+   }
+
+   &__week-content {
+      display: grid;
+      grid-template-columns: auto 1fr;
+   }
+
+   &__timeline {
+      @include grid-rows(var(--numHours), var(--timeHeight));
+      margin-right: 1.5rem;
+   }
+
+   &__days {
+      display: grid;
+      grid-column: 2;
+      gap: 15px;
+      grid-template-columns: repeat(var(--numDays), minmax(150px, 1fr));
+   }
+
+   &__events {
+      @include grid-rows(var(--numHours), var(--timeHeight));
+      border-radius: 5px;
+      background: var(--calBgColor);
+   }
+
+   &__event {
+      border: 1px solid var(--eventBorderColor);
+      border-radius: 5px;
+      padding: 0.5rem;
+      margin: 0.1rem 0.5rem;
+      background: white;
+
+      &--compact {
+         display: block;
+         padding: 0.2rem;
+         margin: 0.1rem;
+         font-size: 0.8rem;
+      }
+
+      &--start-8 {
+         grid-row-start: 1;
+      } // 8:00
+      &--start-9 {
+         grid-row-start: 2;
+      } // 9:00
+      &--start-10 {
+         grid-row-start: 3;
+      } // 10:00
+      &--start-11 {
+         grid-row-start: 4;
+      } // 11:00
+      &--start-12 {
+         grid-row-start: 5;
+      } // 12:00
+      &--start-13 {
+         grid-row-start: 6;
+      } // 13:00
+      &--start-14 {
+         grid-row-start: 7;
+      } // 14:00
+      &--start-15 {
+         grid-row-start: 8;
+      } // 15:00
+      &--start-16 {
+         grid-row-start: 9;
+      } // 16:00
+      &--start-17 {
+         grid-row-start: 10;
+      } // 17:00
+      &--start-18 {
+         grid-row-start: 11;
+      } // 18:00
+      &--start-19 {
+         grid-row-start: 12;
+      } // 19:00
+      &--start-20 {
+         grid-row-start: 13;
+      } // 20:00
+      &--start-21 {
+         grid-row-start: 14;
+      } // 21:00
+      &--start-22 {
+         grid-row-start: 15;
+      } // 22:00
+      &--start-23 {
+         grid-row-start: 16;
+      } // 23:00
+
+      &--end-9 {
+         grid-row-end: 2;
+      } // 9:00
+      &--end-10 {
+         grid-row-end: 3;
+      } // 10:00
+      &--end-11 {
+         grid-row-end: 4;
+      } // 11:00
+      &--end-12 {
+         grid-row-end: 5;
+      } // 12:00
+      &--end-13 {
+         grid-row-end: 6;
+      } // 13:00
+      &--end-14 {
+         grid-row-end: 7;
+      } // 14:00
+      &--end-15 {
+         grid-row-end: 8;
+      } // 15:00
+      &--end-16 {
+         grid-row-end: 9;
+      } // 16:00
+      &--end-17 {
+         grid-row-end: 10;
+      } // 17:00
+      &--end-18 {
+         grid-row-end: 11;
+      } // 18:00
+      &--end-19 {
+         grid-row-end: 12;
+      } // 19:00
+      &--end-20 {
+         grid-row-end: 13;
+      } // 20:00
+      &--end-21 {
+         grid-row-end: 14;
+      } // 21:00
+      &--end-22 {
+         grid-row-end: 15;
+      } // 22:00
+      &--end-23 {
+         grid-row-end: 16;
+      } // 23:00
+      &--end-24 {
+         grid-row-end: 17;
+      } // 24:00
+
+      &--pink {
+         background: get-event-color('pink');
+      }
+
+      &--yellow {
+         background: get-event-color('yellow');
+      }
+
+      &--blue {
+         background: get-event-color('blue');
+      }
+
+      &--green {
+         background: get-event-color('green');
+      }
+   }
+
+   &__title {
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+   }
+
+   &__spacer,
+   &__date {
+      height: var(--timeHeight);
+   }
+
+   &__date {
+      display: flex;
+      gap: 1em;
+   }
+
+   &__date-num {
+      font-size: 2rem;
+      font-weight: 600;
+      display: inline;
+   }
+
+   &__date-day {
+      display: inline;
+      font-size: 2rem;
+      font-weight: 300;
+   }
+
+   &__week {
+      &--compact {
+         cursor: pointer;
+      }
+
+      &--selected {
+         opacity: 1;
+         cursor: default;
+         display: block;
+      }
+   }
+
+   &__day {
+      &--compact {
+         display: flex;
+         flex-direction: column;
+         align-items: center;
+         justify-content: center;
+         padding: 0.5rem;
+         border: 1px solid var(--eventBorderColor);
+         border-radius: 5px;
+         background: var(--calBgColor);
+      }
+
+      &--full {
+         display: block;
+      }
+   }
+
+   /*
+   &__day {
+      
+      &--mon {
+      }
+      &--tues {
+      }
+      &--wed {
+      }
+      &--thurs {
+      }
+      &--fri {
+      }
+      &--sat {
+      }
+      &--sun {
+      }
+		
+   }
+	*/
+}
+
+body {
+   font-family: 'Roboto', sans-serif;
+}
