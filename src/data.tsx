@@ -286,6 +286,12 @@ const weeksData: Week[] = [
                   end: '16:00',
                   color: 'green',
                },
+               {
+                  title: 'Sissyfication',
+                  start: '18:00',
+                  end: '20:00',
+                  color: 'green',
+               },
             ],
          },
          {

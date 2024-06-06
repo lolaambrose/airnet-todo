@@ -3,7 +3,7 @@
 :root {
    --numDays: 7;
    --numHours: 16;
-   --timeHeight: 40px;
+   --timeHeight: 5.5vh;
    --calBgColor: #fff1f8;
    --eventBorderColor: #f2d3d8;
    --eventColor1: #ffd6d1;
@@ -48,35 +48,98 @@ p {
    flex-direction: column;
    gap: 20px;
    margin: 2rem;
+   margin-top: 1rem;
    overflow: hidden;
+
+   &__weekdays--full {
+      display: grid;
+      grid-template-columns: repeat(var(--numDays), 1fr);
+      gap: 15px;
+      text-align: start;
+      grid-column: 2;
+      grid-row: 1;
+   }
+
+   &__weekdays {
+      display: grid;
+      grid-template-columns: repeat(var(--numDays), minmax(150px, 1fr));
+      gap: 15px;
+      text-align: start;
+      grid-column: 2;
+   }
+
+   &__weekday {
+      font-weight: 300;
+      font-size: 2rem;
+      width: 100%;
+
+      min-width: 150px;
+   }
+
+   &__wrapper {
+      display: flex;
+      flex-direction: column;
+      overflow-x: auto;
+   }
 
    &__weeks {
       display: flex;
       flex-direction: column;
       gap: 15px;
+      grid-column: 2;
+      grid-auto-flow: row dense;
    }
 
    &__week-content {
       display: grid;
-      grid-template-columns: auto 1fr;
-   }
+      grid-template-columns: 0px 1fr;
 
+      &--compact {
+         grid-template-columns: 0.05fr 1fr;
+         grid-template-rows: 1fr;
+      }
+   }
    &__timeline {
       @include grid-rows(var(--numHours), var(--timeHeight));
       margin-right: 1.5rem;
+      grid-row: 1;
+      text-align: right;
    }
 
    &__days {
       display: grid;
       grid-column: 2;
+      grid-row: 2;
+      gap: 15px;
+      grid-template-columns: repeat(var(--numDays), minmax(150px, 1fr));
+   }
+
+   &__days--compact {
+      display: grid;
+      grid-column: 2;
+      grid-row: 2;
       gap: 15px;
       grid-template-columns: repeat(var(--numDays), minmax(150px, 1fr));
    }
 
    &__events {
-      @include grid-rows(var(--numHours), var(--timeHeight));
-      border-radius: 5px;
-      background: var(--calBgColor);
+      &--full {
+         @include grid-rows(var(--numHours), var(--timeHeight));
+         border-radius: 5px;
+         background: var(--calBgColor);
+         height: 100%;
+         width: 100%;
+      }
+      &--compact {
+         display: block;
+         padding: 0.2rem;
+         margin: 0.1rem;
+         font-size: 0.8rem;
+         width: 100%;
+         max-height: 100px;
+         padding-top: 2.5rem; // Добавляем отступ сверху для числа
+         padding-bottom: 0.5rem;
+      }
    }
 
    &__event {
@@ -86,9 +149,19 @@ p {
       margin: 0.1rem 0.5rem;
       background: white;
 
+      &--title {
+         font-weight: 600;
+         padding: 0.25rem;
+      }
+
+      &--time {
+         padding-left: 0.25rem;
+         padding-bottom: 0.25rem;
+      }
+
       &--compact {
          display: block;
-         padding: 0.2rem;
+         padding: 0rem;
          margin: 0.1rem;
          font-size: 0.8rem;
       }
@@ -208,31 +281,40 @@ p {
       }
    }
 
-   &__title {
-      font-weight: 600;
-      margin-bottom: 0.25rem;
-   }
-
    &__spacer,
    &__date {
       height: var(--timeHeight);
-   }
-
-   &__date {
-      display: flex;
       gap: 1em;
+      min-height: 60px;
+
+      &--compact {
+         position: absolute;
+         top: 0.5rem;
+         left: 0.5rem; // Перемещаем в правый верхний угол
+         font-size: 1rem;
+         font-weight: bold;
+      }
    }
 
    &__date-num {
       font-size: 2rem;
       font-weight: 600;
       display: inline;
+
+      &--full {
+         display: none;
+      }
    }
 
    &__date-day {
-      display: inline;
       font-size: 2rem;
       font-weight: 300;
+      margin-left: 0.5rem;
+      display: none;
+
+      &--full {
+         display: none;
+      }
    }
 
    &__week {
@@ -244,12 +326,18 @@ p {
          opacity: 1;
          cursor: default;
          display: block;
+         overflow-x: hidden;
       }
    }
 
    &__day {
+      position: relative;
+      display: flex;
+      min-height: 100px; // Фиксированная высота ячейки дня
+      aspect-ratio: 1.15 / 1;
+
       &--compact {
-         display: flex;
+         max-height: 150px;
          flex-direction: column;
          align-items: center;
          justify-content: center;
@@ -257,10 +345,28 @@ p {
          border: 1px solid var(--eventBorderColor);
          border-radius: 5px;
          background: var(--calBgColor);
+         max-height: 100%;
+         overflow: hidden;
       }
 
       &--full {
-         display: block;
+         min-height: 100%;
+         aspect-ratio: unset;
+      }
+
+      &-gradient {
+         content: '';
+         position: absolute;
+         bottom: 0;
+         left: 0;
+         right: 0;
+         height: 30px; // Высота градиента
+         background: linear-gradient(
+            to bottom,
+            rgba(255, 241, 248, 0),
+            var(--calBgColor)
+         ); // Градиент от прозрачного к фону блока
+         pointer-events: none; // Чтобы градиент не блокировал клики по событиям
       }
    }
 
@@ -284,6 +390,38 @@ p {
 		
    }
 	*/
+}
+
+@media (max-width: 1300px) {
+   .calendar__days--compact {
+      grid-template-columns: repeat(4, 1fr); // 4 колонки на экране
+   }
+
+   .calendar__weekdays {
+      display: none;
+   }
+
+   .calendar__date-day {
+      display: inline;
+   }
+}
+
+@media (max-width: 900px) {
+   .calendar__days--compact {
+      grid-template-columns: repeat(3, 1fr); // 3 колонки на экране
+   }
+}
+
+@media (max-width: 700px) {
+   .calendar__days--compact {
+      grid-template-columns: repeat(2, 1fr); // 2 колонки на экране
+   }
+}
+
+@media (max-width: 400px) {
+   .calendar__days--compact {
+      grid-template-columns: 1fr; // 1 колонка на экране
+   }
 }
 
 body {
