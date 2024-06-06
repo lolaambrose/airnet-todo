@@ -9,6 +9,7 @@ interface Day {
    num: number;
    day: string;
    events: DayEvent[];
+   isDayOff: boolean;
 }
 
 interface Week {

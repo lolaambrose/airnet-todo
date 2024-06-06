@@ -13,6 +13,7 @@ const weeksData: Week[] = [
                   color: 'green',
                },
             ],
+            isDayOff: false,
          },
          {
             num: 2,
@@ -25,11 +26,13 @@ const weeksData: Week[] = [
                   color: 'blue',
                },
             ],
+            isDayOff: false,
          },
          {
             num: 3,
             day: 'ср',
             events: [],
+            isDayOff: false,
          },
          {
             num: 4,
@@ -42,11 +45,13 @@ const weeksData: Week[] = [
                   color: 'pink',
                },
             ],
+            isDayOff: false,
          },
          {
             num: 5,
             day: 'пт',
             events: [],
+            isDayOff: false,
          },
          {
             num: 6,
@@ -65,11 +70,13 @@ const weeksData: Week[] = [
                   color: 'green',
                },
             ],
+            isDayOff: true,
          },
          {
             num: 7,
             day: 'вс',
             events: [],
+            isDayOff: true,
          },
       ],
    },
@@ -87,6 +94,7 @@ const weeksData: Week[] = [
                   color: 'green',
                },
             ],
+            isDayOff: false,
          },
          {
             num: 9,
@@ -99,11 +107,13 @@ const weeksData: Week[] = [
                   color: 'blue',
                },
             ],
+            isDayOff: false,
          },
          {
             num: 10,
             day: 'ср',
             events: [],
+            isDayOff: false,
          },
          {
             num: 11,
@@ -116,11 +126,13 @@ const weeksData: Week[] = [
                   color: 'pink',
                },
             ],
+            isDayOff: false,
          },
          {
             num: 12,
             day: 'пт',
             events: [],
+            isDayOff: false,
          },
          {
             num: 13,
@@ -139,11 +151,13 @@ const weeksData: Week[] = [
                   color: 'green',
                },
             ],
+            isDayOff: true,
          },
          {
             num: 14,
             day: 'вс',
             events: [],
+            isDayOff: true,
          },
       ],
    },
@@ -151,7 +165,7 @@ const weeksData: Week[] = [
       week: 3,
       days: [
          {
-            num: 9,
+            num: 15,
             day: 'пн',
             events: [
                {
@@ -161,9 +175,10 @@ const weeksData: Week[] = [
                   color: 'green',
                },
             ],
+            isDayOff: false,
          },
          {
-            num: 10,
+            num: 16,
             day: 'вт',
             events: [
                {
@@ -173,14 +188,16 @@ const weeksData: Week[] = [
                   color: 'blue',
                },
             ],
+            isDayOff: false,
          },
          {
-            num: 11,
+            num: 17,
             day: 'ср',
             events: [],
+            isDayOff: false,
          },
          {
-            num: 12,
+            num: 18,
             day: 'чт',
             events: [
                {
@@ -190,14 +207,16 @@ const weeksData: Week[] = [
                   color: 'pink',
                },
             ],
+            isDayOff: false,
          },
          {
-            num: 13,
+            num: 19,
             day: 'пт',
             events: [],
+            isDayOff: false,
          },
          {
-            num: 14,
+            num: 20,
             day: 'сб',
             events: [
                {
@@ -213,11 +232,13 @@ const weeksData: Week[] = [
                   color: 'green',
                },
             ],
+            isDayOff: true,
          },
          {
-            num: 15,
+            num: 21,
             day: 'вс',
             events: [],
+            isDayOff: true,
          },
       ],
    },
@@ -225,7 +246,7 @@ const weeksData: Week[] = [
       week: 4,
       days: [
          {
-            num: 16,
+            num: 22,
             day: 'пн',
             events: [
                {
@@ -235,9 +256,10 @@ const weeksData: Week[] = [
                   color: 'green',
                },
             ],
+            isDayOff: false,
          },
          {
-            num: 17,
+            num: 23,
             day: 'вт',
             events: [
                {
@@ -247,14 +269,16 @@ const weeksData: Week[] = [
                   color: 'blue',
                },
             ],
+            isDayOff: false,
          },
          {
-            num: 18,
+            num: 24,
             day: 'ср',
             events: [],
+            isDayOff: false,
          },
          {
-            num: 19,
+            num: 25,
             day: 'чт',
             events: [
                {
@@ -264,14 +288,35 @@ const weeksData: Week[] = [
                   color: 'pink',
                },
             ],
+            isDayOff: false,
          },
          {
-            num: 20,
+            num: 26,
             day: 'пт',
-            events: [],
+            events: [
+               {
+                  title: 'Fuck me',
+                  start: '9:00',
+                  end: '12:00',
+                  color: 'pink',
+               },
+               {
+                  title: 'Fuck me',
+                  start: '12:00',
+                  end: '22:00',
+                  color: 'pink',
+               },
+               {
+                  title: 'Fuck me',
+                  start: '22:00',
+                  end: '23:00',
+                  color: 'pink',
+               },
+            ],
+            isDayOff: false,
          },
          {
-            num: 21,
+            num: 27,
             day: 'сб',
             events: [
                {
@@ -293,11 +338,13 @@ const weeksData: Week[] = [
                   color: 'green',
                },
             ],
+            isDayOff: true,
          },
          {
-            num: 22,
+            num: 28,
             day: 'вс',
             events: [],
+            isDayOff: true,
          },
       ],
    },

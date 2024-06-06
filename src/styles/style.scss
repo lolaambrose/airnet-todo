@@ -367,6 +367,10 @@ p {
             var(--calBgColor)
          ); // Градиент от прозрачного к фону блока
          pointer-events: none; // Чтобы градиент не блокировал клики по событиям
+
+         &--day-off {
+            background: linear-gradient(to bottom, rgba(255, 241, 248, 0), pink);
+         }
       }
    }
 

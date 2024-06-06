@@ -2,11 +2,7 @@ import React from 'react';
 import Event from './Event';
 
 interface DayProps {
-   day: {
-      num: number;
-      day: string;
-      events: DayEvent[];
-   };
+   day: Day;
    fullView: boolean;
 }
 
@@ -16,6 +12,7 @@ const Day: React.FC<DayProps> = ({ day, fullView }) => {
          className={`
          calendar__day 
          ${fullView ? 'calendar__day--full' : 'calendar__day--compact'}`}
+         style={day.isDayOff ? { backgroundColor: 'pink' } : {}}
       >
          {!fullView && (
             <div
@@ -36,7 +33,13 @@ const Day: React.FC<DayProps> = ({ day, fullView }) => {
                <Event key={index} event={event} fullView={fullView} />
             ))}
          </div>
-         <div className="calendar__day-gradient"></div>
+         {!fullView && (
+            <div
+               className={`
+            calendar__day-gradient 
+            ${day.isDayOff ? 'calendar__day-gradient--day-off' : ''}`}
+            ></div>
+         )}
       </div>
    );
 };
