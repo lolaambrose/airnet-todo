@@ -53,6 +53,13 @@ const EventModal: React.FC<EventModalProps> = ({ isOpen, onRequestClose, event, 
          <div className="modal__content" onClick={handleModalClick}>
             <div className="modal__body">
                <input
+                  type="date"
+                  value={eventData.date}
+                  onChange={(e) => handleEventChange('date', e.target.value)}
+                  className="modal__input"
+                  required
+               />
+               <input
                   type="text"
                   value={eventData.title}
                   onChange={(e) => handleEventChange('title', e.target.value)}

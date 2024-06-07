@@ -23,9 +23,9 @@ const Calendar: React.FC = () => {
    };
 
    const handleSaveEvent = (updatedEvent: DayEvent) => {
-      const newEvents = events.map((event) =>
-         event.id === updatedEvent.id ? updatedEvent : event,
-      );
+      const newEvents = events.some((event) => event.id === updatedEvent.id)
+         ? events.map((event) => (event.id === updatedEvent.id ? updatedEvent : event))
+         : [...events, updatedEvent];
       setEvents(newEvents);
    };
 
