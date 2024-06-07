@@ -4,15 +4,13 @@ import Day from './Day';
 import WeekDays from './WeekDays';
 
 interface WeekProps {
-   week: {
-      week: number;
-      days: Day[];
-   };
+   week: Week;
    isSelected: boolean;
    onClick: () => void;
+   onSaveEvent: (updatedEvent: DayEvent) => void;
 }
 
-const Week: React.FC<WeekProps> = ({ week, onClick, isSelected }) => {
+const Week: React.FC<WeekProps> = ({ week, onClick, isSelected, onSaveEvent }) => {
    return (
       <>
          <div
@@ -30,7 +28,12 @@ const Week: React.FC<WeekProps> = ({ week, onClick, isSelected }) => {
                         <WeekDays isSelected={isSelected} week={week} />
                         <div className="calendar__days">
                            {week.days.map((day, index) => (
-                              <Day key={index} day={day} fullView={isSelected} />
+                              <Day
+                                 key={index}
+                                 day={day}
+                                 fullView={isSelected}
+                                 onSaveEvent={onSaveEvent}
+                              />
                            ))}
                         </div>
                      </div>
@@ -39,7 +42,12 @@ const Week: React.FC<WeekProps> = ({ week, onClick, isSelected }) => {
                   <>
                      <div className="calendar__days--compact">
                         {week.days.map((day, index) => (
-                           <Day key={index} day={day} fullView={isSelected} />
+                           <Day
+                              key={index}
+                              day={day}
+                              fullView={isSelected}
+                              onSaveEvent={onSaveEvent}
+                           />
                         ))}
                      </div>
                   </>
@@ -50,4 +58,4 @@ const Week: React.FC<WeekProps> = ({ week, onClick, isSelected }) => {
    );
 };
 
-export default React.memo(Week);
+export default Week;
