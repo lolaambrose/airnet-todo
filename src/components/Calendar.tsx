@@ -1,51 +1,65 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Week from './Week';
-import weeksData from '../data';
+import { daysData, eventsData } from '../data';
 import WeekDays from './WeekDays';
+import useLocalStorage from '../hooks/useLocalStorage';
+import { deepEqual } from '../utils';
 
 const Calendar: React.FC = () => {
-   const [selectedWeek, setSelectedWeek] = useState<number | null>(null);
-   const [weeks, setWeeks] = useState(weeksData);
+   const [selectedWeek, setSelectedWeek] = useState<Day[] | null>(null);
+   const [days, setDays] = useLocalStorage<Day[]>('calendarDays', daysData);
+   const [events, setEvents] = useLocalStorage<DayEvent[]>('calendarEvents', eventsData);
 
-   const handleWeekClick = (weekNumber: number) => {
-      setSelectedWeek(weekNumber === selectedWeek ? null : weekNumber);
+   useEffect(() => {
+      const updatedDays = days.map((day) => ({
+         ...day,
+         events: events.filter((event) => event.date === day.date),
+      }));
+      setDays(updatedDays);
+   }, [events, setDays]);
+
+   const handleWeekClick = (week: Day[]) => {
+      setSelectedWeek(deepEqual(week, selectedWeek) ? null : week);
    };
 
    const handleSaveEvent = (updatedEvent: DayEvent) => {
-      setWeeks((prevWeeks) => {
-         const newWeeks = prevWeeks.map((week) => {
-            const newDays = week.days.map((day) => {
-               const newEvents = day.events.map((event) =>
-                  event.id === updatedEvent.id ? updatedEvent : event,
-               );
-               return { ...day, events: newEvents };
-            });
-            return { ...week, days: newDays };
-         });
-         return newWeeks;
-      });
+      const newEvents = events.map((event) =>
+         event.id === updatedEvent.id ? updatedEvent : event,
+      );
+      setEvents(newEvents);
    };
 
-   const weeksToRender = () => {
-      if (selectedWeek !== null) {
-         return weeks.filter((week) => week.week === selectedWeek);
-      }
-      return weeks;
-   };
+   // Группировка дней по неделям
+   const weeks = [];
+   for (let i = 0; i < days.length; i += 7) {
+      weeks.push(days.slice(i, i + 7));
+   }
 
    return (
       <div className="calendar">
          {!selectedWeek && <WeekDays isSelected={selectedWeek !== null} />}
          <div className="calendar__weeks">
-            {weeksToRender().map((week) => (
+            {selectedWeek ? (
                <Week
-                  key={week.week}
-                  week={week}
-                  isSelected={selectedWeek === week.week}
-                  onClick={() => handleWeekClick(week.week)}
+                  key={selectedWeek[0].date}
+                  days={selectedWeek}
+                  events={events}
+                  isSelected={true}
+                  onClick={() => setSelectedWeek(null)}
                   onSaveEvent={handleSaveEvent}
                />
-            ))}
+            ) : (
+               weeks.map((week, index) => (
+                  <Week
+                     key={index}
+                     days={week}
+                     events={events}
+                     isSelected={false}
+                     onClick={() => handleWeekClick(week)}
+                     onSaveEvent={handleSaveEvent}
+                  />
+               ))
+            )}
          </div>
       </div>
    );

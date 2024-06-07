@@ -318,10 +318,12 @@ p {
       }
 
       @for $i from 1 through $numHours {
-         &--start-#{$i + 7} {
+         $hour: if($i < 10, '0' + $i, $i);
+         $formattedHour: if($i + 7 < 10, '0' + ($i + 7), $i + 7);
+         &--start-#{$formattedHour} {
             grid-row-start: #{$i};
          }
-         &--end-#{$i + 7} {
+         &--end-#{$formattedHour} {
             grid-row-end: #{$i};
          }
       }

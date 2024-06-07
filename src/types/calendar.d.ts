@@ -1,5 +1,6 @@
 interface DayEvent {
    id: number;
+   date: string;
    title: string;
    start: string;
    end: string;
@@ -9,13 +10,7 @@ interface DayEvent {
 }
 
 interface Day {
-   num: number;
+   date: string;
    day: string;
-   events: DayEvent[];
    isDayOff: boolean;
-}
-
-interface Week {
-   week: number;
-   days: Day[];
 }

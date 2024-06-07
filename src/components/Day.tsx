@@ -5,9 +5,10 @@ interface DayProps {
    day: Day;
    fullView: boolean;
    onSaveEvent: (updatedEvent: DayEvent) => void;
+   events: DayEvent[];
 }
 
-const Day: React.FC<DayProps> = ({ day, fullView, onSaveEvent }) => {
+const Day: React.FC<DayProps> = ({ day, fullView, onSaveEvent, events }) => {
    return (
       <div
          className={`
@@ -21,7 +22,7 @@ const Day: React.FC<DayProps> = ({ day, fullView, onSaveEvent }) => {
                calendar__date 
                ${fullView ? 'calendar__date--full' : 'calendar__date--compact'}`}
             >
-               <p className="calendar__date-num">{day.num}</p>
+               <p className="calendar__date-num">{new Date(day.date).getDate()}</p>
                <p className="calendar__date-day">{day.day}</p>
             </div>
          )}
@@ -30,7 +31,7 @@ const Day: React.FC<DayProps> = ({ day, fullView, onSaveEvent }) => {
             calendar__events 
             ${fullView ? 'calendar__events--full' : 'calendar__events--compact'}`}
          >
-            {day.events.map((event, index) => (
+            {events.map((event, index) => (
                <Event key={index} event={event} fullView={fullView} onSave={onSaveEvent} />
             ))}
          </div>

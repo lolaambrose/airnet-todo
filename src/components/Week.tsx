@@ -4,19 +4,26 @@ import Day from './Day';
 import WeekDays from './WeekDays';
 
 interface WeekProps {
-   week: Week;
+   days: Day[];
    isSelected: boolean;
    onClick: () => void;
    onSaveEvent: (updatedEvent: DayEvent) => void;
+   events: DayEvent[];
 }
 
-const Week: React.FC<WeekProps> = ({ week, onClick, isSelected, onSaveEvent }) => {
+const Week: React.FC<WeekProps> = ({ days, onClick, isSelected, onSaveEvent, events }) => {
+   const handleClick = () => {
+      //if (isSelected) {
+      onClick();
+      //}
+   };
+
    return (
       <>
          <div
             className={`calendar__week 
             ${isSelected ? 'calendar__week--selected' : 'calendar__week--compact'}`}
-            onClick={onClick}
+            onClick={handleClick}
          >
             <div
                className={`calendar__week-content ${isSelected ? 'calendar__week-content--compact' : ''}`}
@@ -25,30 +32,38 @@ const Week: React.FC<WeekProps> = ({ week, onClick, isSelected, onSaveEvent }) =
                   <>
                      <Timeline />
                      <div className="calendar__wrapper">
-                        <WeekDays isSelected={isSelected} week={week} />
+                        <WeekDays isSelected={isSelected} days={days} />
                         <div className="calendar__days">
-                           {week.days.map((day, index) => (
-                              <Day
-                                 key={index}
-                                 day={day}
-                                 fullView={isSelected}
-                                 onSaveEvent={onSaveEvent}
-                              />
-                           ))}
+                           {days.map((day) => {
+                              const dayEvents = events.filter((event) => event.date === day.date);
+                              return (
+                                 <Day
+                                    key={day.date}
+                                    day={day}
+                                    events={dayEvents}
+                                    fullView={isSelected}
+                                    onSaveEvent={onSaveEvent}
+                                 />
+                              );
+                           })}
                         </div>
                      </div>
                   </>
                ) : (
                   <>
                      <div className="calendar__days--compact">
-                        {week.days.map((day, index) => (
-                           <Day
-                              key={index}
-                              day={day}
-                              fullView={isSelected}
-                              onSaveEvent={onSaveEvent}
-                           />
-                        ))}
+                        {days.map((day) => {
+                           const dayEvents = events.filter((event) => event.date === day.date);
+                           return (
+                              <Day
+                                 key={day.date}
+                                 day={day}
+                                 events={dayEvents}
+                                 fullView={isSelected}
+                                 onSaveEvent={onSaveEvent}
+                              />
+                           );
+                        })}
                      </div>
                   </>
                )}
