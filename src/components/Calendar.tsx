@@ -1,22 +1,38 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import Week from './Week';
 import { daysData, eventsData } from '../data';
-import WeekDays from './WeekDays';
 import useLocalStorage from '../hooks/useLocalStorage';
 import { deepEqual } from '../utils';
 import Month from './Month';
+import useHolidays from '../hooks/useHolidays';
 
 const Calendar: React.FC = () => {
    const [selectedWeek, setSelectedWeek] = useState<Day[] | null>(null);
-   const [days] = useLocalStorage<Day[]>('calendarDays', daysData);
+   const [days, setDays] = useLocalStorage<Day[]>('calendarDays', daysData);
    const [events, setEvents] = useLocalStorage<DayEvent[]>('calendarEvents', eventsData);
+   const { holidays, isLoading } = useHolidays(new Date().getFullYear());
 
-   useMemo(() => {
+   const updatedDays = useMemo(() => {
       return days.map((day) => ({
          ...day,
+         isDayOff: holidays.includes(day.date),
          events: events.filter((event) => event.date === day.date),
       }));
-   }, [events, days]);
+   }, [holidays, events, days]);
+
+   useEffect(() => {
+      if (!deepEqual(days, updatedDays)) {
+         setDays(updatedDays);
+      }
+   }, [updatedDays, days, setDays]);
+
+   if (isLoading) {
+      return (
+         <div className="skeleton">
+            <div className="skeleton__content">Загрузка...</div>
+         </div>
+      );
+   }
 
    const handleDayClick = (day: Day) => {
       const dayIndexMap: { [key in Day['day']]: number } = {
@@ -67,7 +83,6 @@ const Calendar: React.FC = () => {
 
    return (
       <div className="calendar">
-         {!selectedWeek && <WeekDays isSelected={selectedWeek !== null} />}
          <div className="calendar__weeks">
             {selectedWeek ? (
                <Week

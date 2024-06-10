@@ -139,12 +139,22 @@ const daysData: Day[] = [
       day: 'пт',
       isDayOff: false,
    },
+   {
+      date: '2024-06-29',
+      day: 'сб',
+      isDayOff: false,
+   },
+   {
+      date: '2024-06-30',
+      day: 'вс',
+      isDayOff: false,
+   },
 ];
 
 const eventsData: DayEvent[] = [
    {
       id: 1,
-      title: 'Fuck me',
+      title: 'Some event',
       start: '09:00',
       end: '12:00',
       color: 'pink',
