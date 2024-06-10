@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Day from './Day';
+import WeekDays from './WeekDays';
 
 interface MonthProps {
    days: Day[];
@@ -47,6 +48,7 @@ const Month: React.FC<MonthProps> = ({ days, events, onDayClick, onSaveEvent, na
    return (
       <>
          <div className="calendar__month-name">{name}</div>
+         <WeekDays isSelected={false} />
          <div className="calendar__days calendar__days--compact">
             {days.map((day) => {
                const dayEvents = events.filter((event) => event.date === day.date);
