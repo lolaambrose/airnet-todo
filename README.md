@@ -7,8 +7,8 @@
 Склонируйте репозиторий на вашу локальную машину:
 
 ```sh
-git clone <URL*вашего*репозитория>
-cd <имя*вашего*репозитория>
+git clone https://github.com/lolaambrose/airnet-todo.git
+cd https://github.com/lolaambrose/airnet-todo.git
 ```
 
 ### Шаг 2: Сборка и запуск контейнеров Docker
@@ -34,7 +34,7 @@ server {
 	listen 80;
 	server_name mysite.com;
 	location / {
-		proxy_pass http://localhost:4173;
+		proxy_pass http://localhost:9999;
 		proxy_set_header Host $host;
 		proxy_set_header X-Real-IP $remote_addr;
 		proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
