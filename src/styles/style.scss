@@ -236,6 +236,21 @@ p {
       overflow-x: auto;
    }
 
+   &__header {
+      display: flex;
+      justify-content: space-between;
+
+      &-back {
+         cursor: pointer;
+      }
+
+      &-switch {
+         font-size: 1rem;
+         margin: 0;
+         padding: 0.25rem;
+      }
+   }
+
    &__weeks {
       display: flex;
       flex-direction: column;

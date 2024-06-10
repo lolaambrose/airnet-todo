@@ -11,7 +11,9 @@ const EventModal: React.FC<EventModalProps> = ({ isOpen, onRequestClose, event, 
    const [eventData, setEventData] = useState<DayEvent | null>(event);
 
    useEffect(() => {
-      setEventData(event);
+      if (event !== eventData) {
+         setEventData(event);
+      }
    }, [event]);
 
    const handleEventChange = (field: string, value: string | boolean) => {
