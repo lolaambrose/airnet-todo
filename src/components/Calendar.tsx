@@ -5,11 +5,16 @@ import useLocalStorage from '../hooks/useLocalStorage';
 import { deepEqual } from '../utils';
 import Month from './Month';
 import useHolidays from '../hooks/useHolidays';
+import BackIcon from './icons/BackIcon';
 
 const Calendar: React.FC = () => {
+   const [currentProfile, setCurrentProfile] = useState('profile_serega');
    const [selectedWeek, setSelectedWeek] = useState<Day[] | null>(null);
-   const [days, setDays] = useLocalStorage<Day[]>('calendarDays', daysData);
-   const [events, setEvents] = useLocalStorage<DayEvent[]>('calendarEvents', eventsData);
+   const [days, setDays] = useLocalStorage<Day[]>(`calendarDays_${currentProfile}`, daysData);
+   const [events, setEvents] = useLocalStorage<DayEvent[]>(
+      `calendarEvents_${currentProfile}`,
+      eventsData,
+   );
    const { holidays, isLoading } = useHolidays(new Date().getFullYear());
 
    const updatedDays = useMemo(() => {
@@ -25,6 +30,13 @@ const Calendar: React.FC = () => {
          setDays(updatedDays);
       }
    }, [updatedDays, days, setDays]);
+
+   useEffect(() => {
+      const storedDays = localStorage.getItem(`calendarDays_${currentProfile}`);
+      const storedEvents = localStorage.getItem(`calendarEvents_${currentProfile}`);
+      setDays(storedDays ? JSON.parse(storedDays) : daysData);
+      setEvents(storedEvents ? JSON.parse(storedEvents) : eventsData);
+   }, [currentProfile]);
 
    if (isLoading) {
       return (
@@ -83,6 +95,19 @@ const Calendar: React.FC = () => {
 
    return (
       <div className="calendar">
+         <div className="calendar__header">
+            <div className="calendar__header-back" onClick={() => setSelectedWeek(null)}>
+               {selectedWeek ? <BackIcon size={30} /> : ''}
+            </div>
+            <select
+               className="calendar__header-switch"
+               value={currentProfile}
+               onChange={(e) => setCurrentProfile(e.target.value)}
+            >
+               <option value="profile_serega">Серёга</option>
+               <option value="profile_mixa">Миха</option>
+            </select>
+         </div>
          <div className="calendar__weeks">
             {selectedWeek ? (
                <Week
