@@ -10,7 +10,7 @@ const Calendar: React.FC = () => {
    const [selectedWeek, setSelectedWeek] = useState<Day[] | null>(null);
    const [days, setDays] = useLocalStorage<Day[]>('calendarDays', daysData);
    const [events, setEvents] = useLocalStorage<DayEvent[]>('calendarEvents', eventsData);
-   const holidays = useHolidays(new Date().getFullYear());
+   const { holidays, isLoading } = useHolidays(new Date().getFullYear());
 
    const updatedDays = useMemo(() => {
       return days.map((day) => ({
@@ -25,6 +25,14 @@ const Calendar: React.FC = () => {
          setDays(updatedDays);
       }
    }, [updatedDays, days, setDays]);
+
+   if (isLoading) {
+      return (
+         <div className="skeleton">
+            <div className="skeleton__content">Загрузка...</div>
+         </div>
+      );
+   }
 
    const handleDayClick = (day: Day) => {
       const dayIndexMap: { [key in Day['day']]: number } = {

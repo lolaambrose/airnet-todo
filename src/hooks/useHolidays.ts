@@ -2,12 +2,14 @@ import { useEffect, useState } from 'react';
 
 const useHolidays = (year: number) => {
    const [holidays, setHolidays] = useState<string[]>([]);
+   const [isLoading, setIsLoading] = useState(true);
 
    useEffect(() => {
       const fetchHolidays = async () => {
          const cachedHolidays = localStorage.getItem(`holidays-${year}`);
          if (cachedHolidays) {
             setHolidays(JSON.parse(cachedHolidays));
+            setIsLoading(false);
             return;
          }
 
@@ -29,13 +31,15 @@ const useHolidays = (year: number) => {
             localStorage.setItem(`holidays-${year}`, JSON.stringify(filteredHolidays));
          } catch (error) {
             console.error('Ошибка при загрузке данных о праздничных днях:', error);
+         } finally {
+            setIsLoading(false);
          }
       };
 
       fetchHolidays();
    }, [year]);
 
-   return holidays;
+   return { holidays, isLoading };
 };
 
 export default useHolidays;
