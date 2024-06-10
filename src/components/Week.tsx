@@ -27,7 +27,7 @@ const Week: React.FC<WeekProps> = ({ days, onClick, isSelected, onSaveEvent, eve
                   <div className="calendar__days">
                      {fullWeek.map((day, index) => {
                         if (!day.date)
-                           return <div key={index} className="calendar__day--empty"></div>; // Пропускаем пустые дни
+                           return <div key={index} className="calendar__day--empty"></div>;
                         const dayEvents = events.filter((event) => event.date === day.date);
                         return (
                            <Day
