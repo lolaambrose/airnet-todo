@@ -96,7 +96,11 @@ const Calendar: React.FC = () => {
    return (
       <div className="calendar">
          <div className="calendar__header">
-            <div className="calendar__header-back" onClick={() => setSelectedWeek(null)}>
+            <div
+               className="calendar__header-back"
+               onClick={() => setSelectedWeek(null)}
+               data-testid="back-button"
+            >
                {selectedWeek ? <BackIcon size={30} /> : ''}
             </div>
             <select
