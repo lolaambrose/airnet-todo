@@ -121,11 +121,18 @@ p {
       gap: 1rem;
       margin-top: 1rem;
 
-      &--label {
+      &-label {
          font-size: 0.85rem;
       }
 
-      &--time {
+      &-color {
+         display: flex;
+         place-content: center;
+         justify-content: space-between;
+         align-items: center;
+      }
+
+      &-time {
          display: flex;
          flex-direction: row;
          gap: 0.5rem;
@@ -166,6 +173,13 @@ p {
    margin: 2rem;
    margin-top: rem;
    overflow: hidden;
+
+   &__month {
+      &-name {
+         font-size: 1.7rem;
+         font-weight: 400;
+      }
+   }
 
    &__weekdays--full {
       display: grid;
@@ -272,7 +286,7 @@ p {
          opacity: 0.35;
       }
 
-      &--description {
+      &-description {
          padding: 0.3rem;
          padding-top: 0;
          white-space: normal;
@@ -282,7 +296,7 @@ p {
          font-size: 0.9rem;
       }
 
-      &--title {
+      &-title {
          font-weight: 600;
          padding: 0.25rem;
          white-space: normal;
@@ -290,7 +304,7 @@ p {
          text-overflow: ellipsis;
       }
 
-      &--time {
+      &-time {
          padding-left: 0.25rem;
          padding-bottom: 0.25rem;
       }

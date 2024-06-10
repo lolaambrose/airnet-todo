@@ -44,14 +44,14 @@ const Event: React.FC<EventProps> = ({ event, fullView, onSave }) => {
                }
             }}
          >
-            <p className="calendar__event--title">{event.title}</p>
+            <p className="calendar__event-title">{event.title}</p>
             {!event.isCompleted && !(isTooShort && fullView) && (
-               <p className="calendar__event--time">
+               <p className="calendar__event-time">
                   {event.start} - {event.end}
                </p>
             )}
             {!event.isCompleted && fullView && !isTooShort && (
-               <p className="calendar__event--description">{event.description}</p>
+               <p className="calendar__event-description">{event.description}</p>
             )}
             {fullView && (
                <div

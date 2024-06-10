@@ -14,7 +14,7 @@ const EventModal: React.FC<EventModalProps> = ({ isOpen, onRequestClose, event, 
       setEventData(event);
    }, [event]);
 
-   const handleEventChange = (field: string, value: string) => {
+   const handleEventChange = (field: string, value: string | boolean) => {
       if (eventData) {
          setEventData({ ...eventData, [field]: value });
       }
@@ -73,21 +73,32 @@ const EventModal: React.FC<EventModalProps> = ({ isOpen, onRequestClose, event, 
                   placeholder="Описание"
                   className="modal__textarea"
                />
-               <select
-                  value={eventData.color}
-                  onChange={(e) => handleEventChange('color', e.target.value)}
-                  className="modal__select"
-               >
-                  <option value="pink">розовый</option>
-                  <option value="yellow">желтый</option>
-                  <option value="blue">голубой</option>
-                  <option value="green">зеленый</option>
-               </select>
+               <div className="modal__footer-color">
+                  <select
+                     value={eventData.color}
+                     onChange={(e) => handleEventChange('color', e.target.value)}
+                     className="modal__select"
+                  >
+                     <option value="pink">розовый</option>
+                     <option value="yellow">желтый</option>
+                     <option value="blue">голубой</option>
+                     <option value="green">зеленый</option>
+                  </select>
+                  <label className="modal__label">
+                     <input
+                        type="checkbox"
+                        checked={eventData.isCompleted}
+                        onChange={(e) => handleEventChange('isCompleted', e.target.checked)}
+                        className="modal__checkbox"
+                     />
+                     Завершено
+                  </label>
+               </div>
             </div>
             <div className="modal__footer">
-               <div className="modal__footer--time">
+               <div className="modal__footer-time">
                   <div>
-                     <label htmlFor="time-start" className="modal__footer--label">
+                     <label htmlFor="time-start" className="modal__footer-label">
                         начало
                      </label>
                      <input
@@ -99,7 +110,7 @@ const EventModal: React.FC<EventModalProps> = ({ isOpen, onRequestClose, event, 
                      />
                   </div>
                   <div>
-                     <label htmlFor="time-end" className="modal__footer--label">
+                     <label htmlFor="time-end" className="modal__footer-label">
                         конец
                      </label>
 

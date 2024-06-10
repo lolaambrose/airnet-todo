@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import Week from './Week';
 import { daysData, eventsData } from '../data';
 import WeekDays from './WeekDays';
@@ -8,16 +8,15 @@ import Month from './Month';
 
 const Calendar: React.FC = () => {
    const [selectedWeek, setSelectedWeek] = useState<Day[] | null>(null);
-   const [days, setDays] = useLocalStorage<Day[]>('calendarDays', daysData);
+   const [days] = useLocalStorage<Day[]>('calendarDays', daysData);
    const [events, setEvents] = useLocalStorage<DayEvent[]>('calendarEvents', eventsData);
 
-   useEffect(() => {
-      const updatedDays = days.map((day) => ({
+   useMemo(() => {
+      return days.map((day) => ({
          ...day,
          events: events.filter((event) => event.date === day.date),
       }));
-      setDays(updatedDays);
-   }, [events, setDays]);
+   }, [events, days]);
 
    const handleDayClick = (day: Day) => {
       const dayIndexMap: { [key in Day['day']]: number } = {
@@ -68,7 +67,6 @@ const Calendar: React.FC = () => {
 
    return (
       <div className="calendar">
-         <div className="calendar__month-name">Суперянварь</div>
          {!selectedWeek && <WeekDays isSelected={selectedWeek !== null} />}
          <div className="calendar__weeks">
             {selectedWeek ? (
@@ -86,7 +84,7 @@ const Calendar: React.FC = () => {
                   events={events}
                   onDayClick={handleDayClick}
                   onSaveEvent={handleSaveEvent}
-                  name={'Суперянварь'}
+                  name={'Супериюнь'}
                />
             )}
          </div>

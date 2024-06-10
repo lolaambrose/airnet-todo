@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Day from './Day';
 
 interface MonthProps {
@@ -10,6 +10,19 @@ interface MonthProps {
 }
 
 const Month: React.FC<MonthProps> = ({ days, events, onDayClick, onSaveEvent, name }) => {
+   const [isWideScreen, setIsWideScreen] = useState(window.innerWidth >= 1300);
+
+   useEffect(() => {
+      const handleResize = () => {
+         setIsWideScreen(window.innerWidth >= 1300);
+      };
+
+      window.addEventListener('resize', handleResize);
+      return () => {
+         window.removeEventListener('resize', handleResize);
+      };
+   }, []);
+
    const getGridColumnStart = (day: string) => {
       switch (day) {
          case 'пн':
@@ -32,20 +45,25 @@ const Month: React.FC<MonthProps> = ({ days, events, onDayClick, onSaveEvent, na
    };
 
    return (
-      <div className="calendar__days--compact">
-         {days.map((day) => {
-            const dayEvents = events.filter((event) => event.date === day.date);
-            return (
-               <div
-                  key={day.date}
-                  style={{ gridColumnStart: getGridColumnStart(day.day) }}
-                  onClick={() => onDayClick(day)}
-               >
-                  <Day day={day} events={dayEvents} fullView={false} onSaveEvent={onSaveEvent} />
-               </div>
-            );
-         })}
-      </div>
+      <>
+         <div className="calendar__month-name">{name}</div>
+         <div className="calendar__days calendar__days--compact">
+            {days.map((day) => {
+               const dayEvents = events.filter((event) => event.date === day.date);
+               return (
+                  <div
+                     key={day.date}
+                     style={{
+                        gridColumnStart: isWideScreen ? getGridColumnStart(day.day) : 'auto',
+                     }}
+                     onClick={() => onDayClick(day)}
+                  >
+                     <Day day={day} events={dayEvents} fullView={false} onSaveEvent={onSaveEvent} />
+                  </div>
+               );
+            })}
+         </div>
+      </>
    );
 };
 

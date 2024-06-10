@@ -12,8 +12,6 @@ interface WeekProps {
 }
 
 const Week: React.FC<WeekProps> = ({ days, onClick, isSelected, onSaveEvent, events }) => {
-   console.log(days);
-
    const fullWeek = [...days];
    while (fullWeek.length < 7) {
       fullWeek.push({ date: '', day: '', isDayOff: false });
