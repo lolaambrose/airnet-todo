@@ -11,6 +11,6 @@ interface DayEvent {
 
 interface Day {
    date: string;
-   day: string;
+   day: 'пн' | 'вт' | 'ср' | 'чт' | 'пт' | 'сб' | 'вс' | '';
    isDayOff: boolean;
 }

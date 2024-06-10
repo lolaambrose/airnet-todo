@@ -10,6 +10,8 @@ interface DayProps {
 }
 
 const Day: React.FC<DayProps> = ({ day, fullView, onSaveEvent, events }) => {
+   if (!day.date) return null;
+
    const [isModalOpen, setIsModalOpen] = useState(false);
    const [selectedEvent, setSelectedEvent] = useState<DayEvent | null>(null);
 
@@ -41,12 +43,37 @@ const Day: React.FC<DayProps> = ({ day, fullView, onSaveEvent, events }) => {
       handleCloseModal();
    };
 
+   const getGridColumn = (day: string) => {
+      switch (day) {
+         case 'пн':
+            return 1;
+         case 'вт':
+            return 2;
+         case 'ср':
+            return 3;
+         case 'чт':
+            return 4;
+         case 'пт':
+            return 5;
+         case 'сб':
+            return 6;
+         case 'вс':
+            return 7;
+         default:
+            return 'auto';
+      }
+   };
+
    return (
       <div
          className={`
          calendar__day 
          ${fullView ? 'calendar__day--full' : 'calendar__day--compact'}`}
-         style={day.isDayOff ? { backgroundColor: 'pink' } : {}}
+         style={{
+            gridColumn: fullView ? getGridColumn(day.day) : 'auto',
+            gridRow: fullView ? '1' : 'auto',
+            backgroundColor: day.isDayOff ? 'pink' : undefined,
+         }}
          onClick={handleOpenModal}
       >
          {!fullView && (

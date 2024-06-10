@@ -12,61 +12,37 @@ interface WeekProps {
 }
 
 const Week: React.FC<WeekProps> = ({ days, onClick, isSelected, onSaveEvent, events }) => {
-   const handleClick = () => {
-      //if (isSelected) {
-      onClick();
-      //}
-   };
+   console.log(days);
+
+   const fullWeek = [...days];
+   while (fullWeek.length < 7) {
+      fullWeek.push({ date: '', day: '', isDayOff: false });
+   }
 
    return (
       <>
-         <div
-            className={`calendar__week 
-            ${isSelected ? 'calendar__week--selected' : 'calendar__week--compact'}`}
-            onClick={handleClick}
-         >
-            <div
-               className={`calendar__week-content ${isSelected ? 'calendar__week-content--compact' : ''}`}
-            >
-               {isSelected ? (
-                  <>
-                     <Timeline />
-                     <div className="calendar__wrapper">
-                        <WeekDays isSelected={isSelected} days={days} />
-                        <div className="calendar__days">
-                           {days.map((day) => {
-                              const dayEvents = events.filter((event) => event.date === day.date);
-                              return (
-                                 <Day
-                                    key={day.date}
-                                    day={day}
-                                    events={dayEvents}
-                                    fullView={isSelected}
-                                    onSaveEvent={onSaveEvent}
-                                 />
-                              );
-                           })}
-                        </div>
-                     </div>
-                  </>
-               ) : (
-                  <>
-                     <div className="calendar__days--compact">
-                        {days.map((day) => {
-                           const dayEvents = events.filter((event) => event.date === day.date);
-                           return (
-                              <Day
-                                 key={day.date}
-                                 day={day}
-                                 events={dayEvents}
-                                 fullView={isSelected}
-                                 onSaveEvent={onSaveEvent}
-                              />
-                           );
-                        })}
-                     </div>
-                  </>
-               )}
+         <div className="calendar__week calendar__week--selected" onClick={onClick}>
+            <div className="calendar__week-content calendar__week-content--compact">
+               <Timeline />
+               <div className="calendar__wrapper">
+                  <WeekDays isSelected={isSelected} days={fullWeek} />
+                  <div className="calendar__days">
+                     {fullWeek.map((day, index) => {
+                        if (!day.date)
+                           return <div key={index} className="calendar__day--empty"></div>; // Пропускаем пустые дни
+                        const dayEvents = events.filter((event) => event.date === day.date);
+                        return (
+                           <Day
+                              key={day.date}
+                              day={day}
+                              events={dayEvents}
+                              fullView={isSelected}
+                              onSaveEvent={onSaveEvent}
+                           />
+                        );
+                     })}
+                  </div>
+               </div>
             </div>
          </div>
       </>

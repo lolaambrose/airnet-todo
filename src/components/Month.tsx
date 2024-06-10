@@ -1,0 +1,52 @@
+import React from 'react';
+import Day from './Day';
+
+interface MonthProps {
+   days: Day[];
+   events: DayEvent[];
+   onDayClick: (day: Day) => void;
+   onSaveEvent: (updatedEvent: DayEvent) => void;
+   name: string;
+}
+
+const Month: React.FC<MonthProps> = ({ days, events, onDayClick, onSaveEvent, name }) => {
+   const getGridColumnStart = (day: string) => {
+      switch (day) {
+         case 'пн':
+            return 1;
+         case 'вт':
+            return 2;
+         case 'ср':
+            return 3;
+         case 'чт':
+            return 4;
+         case 'пт':
+            return 5;
+         case 'сб':
+            return 6;
+         case 'вс':
+            return 7;
+         default:
+            return 'auto';
+      }
+   };
+
+   return (
+      <div className="calendar__days--compact">
+         {days.map((day) => {
+            const dayEvents = events.filter((event) => event.date === day.date);
+            return (
+               <div
+                  key={day.date}
+                  style={{ gridColumnStart: getGridColumnStart(day.day) }}
+                  onClick={() => onDayClick(day)}
+               >
+                  <Day day={day} events={dayEvents} fullView={false} onSaveEvent={onSaveEvent} />
+               </div>
+            );
+         })}
+      </div>
+   );
+};
+
+export default Month;
