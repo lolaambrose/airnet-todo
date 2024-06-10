@@ -1,4 +1,4 @@
-export const deepEqual = (a: any, b: any): boolean => {
+export const deepEqual = (a: unknown, b: unknown): boolean => {
    if (a === b) return true;
 
    if (typeof a !== 'object' || a === null || typeof b !== 'object' || b === null) {
@@ -11,7 +11,10 @@ export const deepEqual = (a: any, b: any): boolean => {
    if (keysA.length !== keysB.length) return false;
 
    for (const key of keysA) {
-      if (!keysB.includes(key) || !deepEqual(a[key], b[key])) {
+      if (
+         !keysB.includes(key) ||
+         !deepEqual((a as Record<string, unknown>)[key], (b as Record<string, unknown>)[key])
+      ) {
          return false;
       }
    }

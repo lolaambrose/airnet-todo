@@ -8,7 +8,7 @@ const useHolidays = (year: number, httpClient: HttpClient = new FetchHttpClient(
    const fetchHolidays = useCallback(async () => {
       const cachedHolidays = localStorage.getItem(`holidays-${year}`);
       if (cachedHolidays) {
-         setHolidays(JSON.parse(cachedHolidays));
+         setHolidays(JSON.parse(cachedHolidays) as string[]);
          setIsLoading(false);
          return;
       }
@@ -19,8 +19,10 @@ const useHolidays = (year: number, httpClient: HttpClient = new FetchHttpClient(
             return date.toISOString().split('T')[0];
          });
 
-         const holidayPromises = dates.map(async (date) => {
-            const result = await httpClient.get(`https://isdayoff.ru/${date.replace(/-/g, '')}`);
+         const holidayPromises = dates.map(async (date): Promise<string | null> => {
+            const result: string = await httpClient.get(
+               `https://isdayoff.ru/${date.replace(/-/g, '')}`,
+            );
             return result === '1' ? date : null;
          });
 
@@ -36,8 +38,8 @@ const useHolidays = (year: number, httpClient: HttpClient = new FetchHttpClient(
    }, [year, httpClient]);
 
    useEffect(() => {
-      fetchHolidays();
-   }, [isLoading]);
+      void fetchHolidays();
+   }, [isLoading, fetchHolidays]);
 
    return { holidays, isLoading };
 };

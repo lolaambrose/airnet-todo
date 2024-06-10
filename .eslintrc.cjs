@@ -8,8 +8,11 @@ module.exports = {
 		'plugin:react/recommended',
 		'plugin:react/jsx-runtime',
 	],
-	ignorePatterns: ['dist', '.eslintrc.cjs', '*.html', '*.css'],
+	ignorePatterns: ['dist', '.eslintrc.cjs', '*.html', '*.css', 'vite.config.*'],
 	parser: '@typescript-eslint/parser',
+	parserOptions: {
+		project: './tsconfig.json',
+	},
 	plugins: ['react-refresh', 'react'],
 	rules: {
 		'react-refresh/only-export-components': [

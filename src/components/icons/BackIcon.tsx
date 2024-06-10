@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+
 interface BackIconProps {
    className?: string;
    size?: number;

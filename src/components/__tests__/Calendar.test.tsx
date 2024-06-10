@@ -1,11 +1,13 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { vi } from 'vitest';
+import { Mock, vi } from 'vitest';
 
-vi.mock('../../hooks/useLocalStorage', () => ({
-   // @ts-ignore
-   default: (key: string, initialValue: any) => [initialValue, vi.fn()],
-}));
+vi.mock('../../hooks/useLocalStorage', () => {
+   return {
+      // @ts-expect-error key is required for proper mock
+      default: (key: string, initialValue: unknown): [unknown, Mock] => [initialValue, vi.fn()],
+   };
+});
 
 describe('Calendar Component', () => {
    beforeEach(() => {
@@ -38,7 +40,7 @@ describe('Calendar Component', () => {
       const { default: Calendar } = await import('../Calendar');
       render(<Calendar />);
       const dayElement = screen.getByText('1');
-      userEvent.click(dayElement);
+      void userEvent.click(dayElement);
       expect(screen.getByTestId('back-button')).toBeInTheDocument();
    });
 });

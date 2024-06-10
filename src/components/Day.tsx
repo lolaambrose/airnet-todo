@@ -10,10 +10,10 @@ interface DayProps {
 }
 
 const Day: React.FC<DayProps> = ({ day, fullView, onSaveEvent, events }) => {
-   if (!day.date) return null;
-
    const [isModalOpen, setIsModalOpen] = useState(false);
    const [selectedEvent, setSelectedEvent] = useState<DayEvent | null>(null);
+
+   if (!day.date) return null;
 
    const handleOpenModal = (e: React.MouseEvent) => {
       if (!fullView) return;
