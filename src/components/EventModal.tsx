@@ -14,7 +14,8 @@ const EventModal: React.FC<EventModalProps> = ({ isOpen, onRequestClose, event, 
       if (event !== eventData) {
          setEventData(event);
       }
-   }, [event, eventData]);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, [event]);
 
    const handleEventChange = (field: string, value: string | boolean) => {
       if (eventData) {
