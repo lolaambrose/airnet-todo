@@ -36,7 +36,8 @@ const Calendar: React.FC = () => {
       const storedEvents = localStorage.getItem(`calendarEvents_${currentProfile}`);
       setDays(storedDays ? (JSON.parse(storedDays) as Day[]) : daysData);
       setEvents(storedEvents ? (JSON.parse(storedEvents) as DayEvent[]) : eventsData);
-   }, [currentProfile, setDays, setEvents]);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, [currentProfile]);
 
    if (isLoading) {
       return (

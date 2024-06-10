@@ -39,7 +39,8 @@ const useHolidays = (year: number, httpClient: HttpClient = new FetchHttpClient(
 
    useEffect(() => {
       void fetchHolidays();
-   }, [isLoading, fetchHolidays]);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, []);
 
    return { holidays, isLoading };
 };
